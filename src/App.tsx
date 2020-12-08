@@ -1,24 +1,58 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
+
+import Wallet from './Wallet/Wallet';
+import Exchange from './Exchange/Exchange';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {/* {location} */}
+        <div className="Avatar-container">
+          <img src="./user.svg" alt="User avatar"></img>
+        </div>
       </header>
+
+      <Router>
+        <div className="Menu">
+          <nav>
+            <ul>
+              <li>
+                <Link to="/wallet">Wallet</Link>
+              </li>
+              <li>
+                <Link to="/exchange">Exchange</Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <Switch>
+
+          <Route exact path="/">
+            <Redirect to={{ pathname: "/exchange" }} />
+          </Route>
+
+          <Route path="/wallet">
+            <Wallet/>
+          </Route>
+
+          <Route path="/exchange">
+            <Exchange/>
+          </Route>
+
+        </Switch>
+      </Router>
+
+
     </div>
   );
 }
