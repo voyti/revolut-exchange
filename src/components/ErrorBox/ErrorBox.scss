@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.error-box {
+  position: absolute;
+  width: 100%;
+  padding: 2px 0;
+  background-color: $color-error;
+  text-align: center;
+  font-size: 18px;
+  color: $color-font-main;
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}

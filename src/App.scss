@@ -1,22 +1,25 @@
+@import './variables';
+
 .App {
   height: 100%;
+    background: linear-gradient(180deg, #{$theme-color-main-1} 0%, #{$theme-color-main-2} 50%);
 
   .App-header {
-    z-index: 20;
+    position: absolute;
+    width: 100%;
 
-    .Avatar-container {
-      $header-own-size: 40px;
-      $header-margin-right: 24px;
+    .Title-container {
+      margin-top: 24px;
+      text-align: center;
 
-      display: inline-block;
-      width: $header-own-size;
-      height: $header-own-size;
-      margin-top: 12px;
-      margin-left: calc(100% - #{$header-own-size + $header-margin-right});
+      .Title {
+        font-size: 26px;
+        font-weight: 600;
 
-      .User-avatar {
-        max-width: $header-own-size;
-        max-height: $header-own-size;
+        background: linear-gradient(90deg, #{$color-font-main} 0%, #{$color-font-main} 50%, #9fb6dc 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
   }

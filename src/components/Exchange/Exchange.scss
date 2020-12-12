@@ -1,0 +1,70 @@
+@import '../../variables';
+@import '../../mixins';
+
+.exchange {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+
+
+  .exchange__top-part {
+    flex: 4 0 auto;
+  }
+
+  .exchange__bottom-part {
+    flex: 5 0 auto;
+
+    background: $theme-color-main-2;
+    background: linear-gradient(180deg, $theme-color-main-2 0%, #4922e6 100%);
+    border-bottom: 1px solid #4922e6;
+  }
+
+  .exchange-operand {
+    @include exchangeValueText;
+
+    display: flex;
+    padding: 0 2rem;
+    margin-top: 80px;
+
+    .exchange-operand__value-container {
+      margin-left: 10vw;
+      width: 100%;
+      max-width: calc(100vw - 4em);
+      overflow: hidden;
+    }
+  }
+
+  .divider {
+    $divider-line-color: #9886b5;
+    $divider-chevron-color: #b098d6;
+    $chevron-size: 40px;
+
+    width: 100%;
+    flex: 0 1 auto;
+    border-bottom: 1px solid $divider-line-color;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+
+    .divider__chevron, .divider__chevron-border {
+
+      display: inline-block;
+      width: $chevron-size;
+      height: $chevron-size;
+      position: absolute;
+      transform-origin: center;
+      transform: rotate(45deg) translate(-$chevron-size / 2, $chevron-size / 2);
+    }
+
+    .divider__chevron {
+      background: linear-gradient(180deg, #5f50db 0%, #6049df 100%);
+      z-index: 10;
+      top: -$chevron-size / 2;
+    }
+
+    .divider__chevron-border {
+      background-color: $divider-chevron-color;
+      top: -($chevron-size / 2) + 1;
+    }
+  }
+}

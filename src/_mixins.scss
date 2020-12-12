@@ -1,17 +1,9 @@
-@mixin Title {
-	.Title-container {
-    margin-top: 24px;
-    text-align: center;
+@import './variables';
 
-    .Title {
-      font-size: 26px;
-      font-weight: 600;
-
-      background: rgb(253,253,253);
-      background: linear-gradient(90deg, rgba(253,253,253,1) 0%, rgba(253,253,253,1) 50%, rgba(159,182,220,1) 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+@mixin exchangeValueText {
+  .exchange-value-text {
+    font-size: 6rem;
+    color: $color-font-main;
+    font-family: $font-main;
   }
 }

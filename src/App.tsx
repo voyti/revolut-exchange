@@ -1,58 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from 'react-router-dom';
+import Exchange from './components/Exchange/Exchange';
+import { Currency } from './interfaces/Exchange';
 
-import Wallet from './Wallet/Wallet';
-import Exchange from './Exchange/Exchange';
+const DEFAULT_WALLET: Currency[] = [
+  { currencyName: 'USD', currencySymbol: '$', amount: 134.54 },
+  { currencyName: 'EUR', currencySymbol: '€', amount: 44.52 },
+  { currencyName: 'GBP', currencySymbol: '£', amount: 102.40 },
+];
+const App = () => {
 
-function App() {
+  const [wallet] = useState(DEFAULT_WALLET);
+
   return (
     <div className="App">
       <header className="App-header">
-        {/* {location} */}
-        <div className="Avatar-container">
-          <img src="./user.svg" alt="User avatar"></img>
+        <div className="Title-container">
+          <span className="Title Title-text">Exchange</span>
         </div>
       </header>
 
-      <Router>
-        <div className="Menu">
-          <nav>
-            <ul>
-              <li>
-                <Link to="/wallet">Wallet</Link>
-              </li>
-              <li>
-                <Link to="/exchange">Exchange</Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-
-        <Switch>
-
-          <Route exact path="/">
-            <Redirect to={{ pathname: "/exchange" }} />
-          </Route>
-
-          <Route path="/wallet">
-            <Wallet/>
-          </Route>
-
-          <Route path="/exchange">
-            <Exchange/>
-          </Route>
-
-        </Switch>
-      </Router>
-
-
+      <Exchange currencies={wallet}/>
     </div>
   );
 }

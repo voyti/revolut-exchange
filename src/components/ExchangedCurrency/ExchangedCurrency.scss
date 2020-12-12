@@ -1,0 +1,14 @@
+@import '../../variables';
+
+.exchanged-currency {
+  text-align: center;
+
+  .currency__value {
+    color:$color-font-main;
+    font-size: 7rem;
+  }
+  .currency__wallet-info {
+    color: $color-font-sub;
+    font-size: 1.5rem;
+  }
+}
