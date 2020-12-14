@@ -24,7 +24,7 @@ const getCurrenciesExchangeRate = (fromCurrencyName: string, toCurrencyName: str
       throw new Error(`Cannot find rate for currency: ${toCurrencyName}`);
     }
 
-    return fromCurrency.rate / toCurrency.rate;
+    return toCurrency.rate / fromCurrency.rate;
 
   } else {
     throw new Error('Cannot calculate rates: Rates list is empty');
@@ -45,4 +45,8 @@ const positiveNumberValidator = (numValue: number) => {
   }
 };
 
-export { parseRates, getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator };
+const formatCurrency = (currencyValue: number) => {
+  return Number(currencyValue.toFixed(2));
+};
+
+export { parseRates, getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator, formatCurrency };

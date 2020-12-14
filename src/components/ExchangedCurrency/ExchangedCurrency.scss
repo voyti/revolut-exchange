@@ -10,5 +10,9 @@
   .currency__wallet-info {
     color: $color-font-sub;
     font-size: 1.5rem;
+
+    &.currency__wallet-info--insufficient {
+      color: $color-error;
+    }
   }
 }

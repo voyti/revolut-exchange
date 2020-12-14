@@ -12,6 +12,8 @@
   }
 
   .exchange__bottom-part {
+    display: flex;
+    flex-direction: column;
     flex: 5 0 auto;
 
     background: $theme-color-main-2;
@@ -23,7 +25,7 @@
     @include exchangeValueText;
 
     display: flex;
-    padding: 0 2rem;
+    padding-left: 2rem;
     margin-top: 80px;
 
     .exchange-operand__value-container {
@@ -66,5 +68,14 @@
       background-color: $divider-chevron-color;
       top: -($chevron-size / 2) + 1;
     }
+  }
+
+  .exchange-button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    align-items: flex-end;
+    margin-bottom: 20px;
   }
 }

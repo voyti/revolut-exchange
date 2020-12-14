@@ -22,7 +22,7 @@ const ExchangeInput = ({currency, inputValue, onInputChanged, shouldAutoFocus }:
         min="0"
         max={currency.amount}
         step="0.01"
-        value={inputValue}
+        value={Number(inputValue).toString()}
         autoFocus={shouldAutoFocus}
         onChange={onInputChanged}
         />

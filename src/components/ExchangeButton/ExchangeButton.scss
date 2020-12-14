@@ -1,0 +1,54 @@
+@import '../../variables';
+
+.exchange-button {
+  font-family: $font-main;
+  border: 1px solid #b098d6;
+  background-color: rgba(0, 0, 0, 0.1);
+  outline: none;
+  display: inline-block;
+  width: 300px;
+  height: 75px;
+
+  &[disabled] {
+    opacity: 0.8;
+  }
+
+  &:not([disabled]) {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      border: 1px solid #fefefe;
+    }
+
+    &:focus {
+      border: 1px solid $color-focus;
+    }
+  }
+
+
+
+  img {
+    $image-size: 20px;
+    width: $image-size;
+    height: $image-size;
+    margin-left: -($image-size / 2);
+    padding: 0 6px;
+  }
+
+  .exchange-button__main-label {
+    font-size: 24px;
+    color: $color-font-main;
+  }
+
+  .exchange-button__sub-label {
+    font-size: 14px;
+    color: $color-font-sub;
+
+    > span > span {
+      padding: 0 6px;
+      font-weight: 600;
+    }
+  }
+}
