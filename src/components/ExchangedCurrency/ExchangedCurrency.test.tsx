@@ -9,7 +9,7 @@ test('renders learn react link', () => {
   ];
   const cb = () => {};
 
-  render(<ExchangedCurrency currency={currencies[0]}/>);
-  const linkElement = screen.getByText(/learn react/i);
+  render(<ExchangedCurrency currency={currencies[0]} value={'0'} onCurrencyPicked={cb}/>);
+  const linkElement = screen.getByText(/You have .*/i);
   expect(linkElement).toBeInTheDocument();
 });

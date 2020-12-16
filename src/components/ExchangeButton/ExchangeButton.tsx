@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './ExchangeButton.scss';
 import { Currency } from '../../interfaces/Exchange';
 
 interface ExchangeButtonProps {
-  fromValue: number,
-  toValue: number,
+  fromValue: string,
+  toValue: string,
   fromCurrency: Currency,
   toCurrency: Currency,
   onExchangeButtonClicked: (inputChangeEvent: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any | void,
@@ -18,27 +18,35 @@ const ExchangeButton = ({fromValue, toValue, fromCurrency, toCurrency, onExchang
     }
   };
 
-  const checkIfFundsSufficient = () => {
-    return fromValue <= fromCurrency.amount;
-  }
+  const checkIfFundsSufficient = useCallback(() => {
+    return Number(fromValue) <= fromCurrency.amount;
+  }, [fromValue, fromCurrency]);
+
+  const checkIfCurrenciesDifferent = useCallback(() => {
+    return fromCurrency.currencyName !== toCurrency.currencyName;
+  }, [fromCurrency, toCurrency]);
 
   return (
     <button className="exchange-button"
+
       onClick={handleExchangeButtonClicked}
-      disabled={!checkIfFundsSufficient()}>
+      disabled={!fromValue || !toValue || !checkIfFundsSufficient() || !checkIfCurrenciesDifferent()}>
 
       <div className="exchange-button__main-label"> <img src="exchange_icon.svg" alt="Exchange icon"/>Exchange</div>
 
       <div className="exchange-button__sub-label">
-
-        { fromValue && toValue && checkIfFundsSufficient() ?
+        { fromValue && toValue && checkIfCurrenciesDifferent() && checkIfFundsSufficient() ?
           <span>You will get
             <span>{toCurrency.currencySymbol}{toValue}</span>for
             <span>{fromCurrency.currencySymbol}{fromValue}</span>
           </span> : null }
 
-        { fromValue && toValue && !checkIfFundsSufficient() ?
+        { fromValue && toValue && checkIfCurrenciesDifferent() && !checkIfFundsSufficient() ?
           <span>You don't have sufficient funds
+          </span> : null }
+
+        { fromValue && toValue && !checkIfCurrenciesDifferent() ?
+          <span>Please pick two different currencies
           </span> : null }
       </div>
   </button>

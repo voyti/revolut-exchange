@@ -15,14 +15,27 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+@media screen and (max-width: 1334px) {
+	html {
+		font-size: 18px;
+	}
+}
+
+
 @media screen and (max-width: 1024px) {
 	html {
 		font-size: 14px;
 	}
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 860px) {
 	html {
 		font-size: 8px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	html {
+		font-size: 6px;
 	}
 }

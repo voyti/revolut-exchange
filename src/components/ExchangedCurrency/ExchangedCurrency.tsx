@@ -1,29 +1,40 @@
-import React from 'react';
 import './ExchangedCurrency.scss';
 import { Currency } from '../../interfaces/Exchange';
-import { formatCurrency } from '../../store/utils';
+import { formatCurrencyString } from '../../store/utils';
 
+declare type CurrencyChangeDirection = 'prev' | 'next';
 interface ExchangedCurrencyProps {
   currency: Currency,
-  value: number,
+  value: string,
   isMoneySource?: boolean,
+  onCurrencyPicked: (direction: CurrencyChangeDirection) => void,
 };
 
-const ExchangedCurrency = ({ currency, value, isMoneySource }: ExchangedCurrencyProps) => {
+const ExchangedCurrency = ({ currency, value, isMoneySource, onCurrencyPicked }: ExchangedCurrencyProps) => {
 
   return (
     <div className="exchanged-currency">
+      <button onClick={() => onCurrencyPicked('next')}>
+          <img src="chevron_left.svg" alt="Next currency"/>
+        </button>
 
-      <div className="currency__value">
-        {currency.currencyName}
+      <div className="exchanged-currency__currency-info">
+        <div className="exchanged-currency__value">
+          {currency.currencyName}
+        </div>
+
+        <div className={`exchanged-currency__wallet-info ${isMoneySource && Number(value) > currency.amount ? 'exchanged-currency__wallet-info--insufficient' : ''}`}>
+          You have {currency.currencySymbol}{formatCurrencyString(currency.amount)}
+        </div>
       </div>
 
-      <div className={`currency__wallet-info ${isMoneySource && value > currency.amount ? 'currency__wallet-info--insufficient' : ''}`}>
-        You have {currency.currencySymbol}{formatCurrency(currency.amount)}
-      </div>
+      <button onClick={() => onCurrencyPicked('prev')}>
+        <img src="chevron_right.svg" alt="Previous currency"/>
+      </button>
 
     </div>
   );
 }
 
 export default ExchangedCurrency;
+export type { CurrencyChangeDirection };

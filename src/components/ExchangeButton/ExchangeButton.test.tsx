@@ -9,8 +9,8 @@ test('renders learn react link', () => {
   ];
   const fromCurrency = currencies[0];
   const toCurrency = currencies[1];
-  const fromValue = 0;
-  const toValue = 0;
+  const fromValue = '0';
+  const toValue = '0';
   const handleExchangeMade = () => {};
 
   render(<ExchangeButton
@@ -19,6 +19,6 @@ test('renders learn react link', () => {
     fromCurrency={fromCurrency}
     toCurrency={toCurrency}
     onExchangeButtonClicked={handleExchangeMade} /> );
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/Exchange/i);
   expect(linkElement).toBeInTheDocument();
 });

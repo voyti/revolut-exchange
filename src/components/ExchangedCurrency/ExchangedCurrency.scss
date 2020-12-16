@@ -1,18 +1,48 @@
 @import '../../variables';
+@import '../../mixins';
 
 .exchanged-currency {
-  text-align: center;
+  @include resetButton;
+  display: flex;
+  flex-direction: row;
 
-  .currency__value {
+  &:hover {
+    button {
+      opacity: 0.8;
+    }
+  }
+
+  &__currency-info {
+    width: 16rem;
+    text-align: center;
+  }
+
+  button {
+    width: 2rem;
+    margin: 0 12px;
+    opacity: 0.2;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 1;
+    }
+  }
+
+  &__value {
     color:$color-font-main;
     font-size: 7rem;
   }
-  .currency__wallet-info {
+
+  &__wallet-info {
     color: $color-font-sub;
     font-size: 1.5rem;
+  }
 
-    &.currency__wallet-info--insufficient {
-      color: $color-error;
-    }
+  &__wallet-info--insufficient {
+    color: $color-error;
   }
 }

@@ -1,6 +1,9 @@
 @import '../../variables';
+@import '../../mixins';
 
 .exchange-button {
+  @include resetButton;
+
   font-family: $font-main;
   border: 1px solid #b098d6;
   background-color: rgba(0, 0, 0, 0.1);
@@ -26,8 +29,6 @@
       border: 1px solid $color-focus;
     }
   }
-
-
 
   img {
     $image-size: 20px;
