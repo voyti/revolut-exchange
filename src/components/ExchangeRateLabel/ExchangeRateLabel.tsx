@@ -26,7 +26,7 @@ const ExchangeRateLabel = ({fromCurrency, toCurrency, rates }: ExchangeRateLabel
   }, [rates, fromCurrency, toCurrency]);
 
   return (
-    <div className={`exchange-rate-label ${!checkIfCurrenciesDifferent() ? 'exchange-rate-label--hidden' : ''}`}>
+    <div className={`exchange-rate-label ${!checkIfCurrenciesDifferent() || !rates.length ? 'exchange-rate-label--hidden' : ''}`}>
       <span>{`1${fromCurrency.currencySymbol} = ${getUnitDisplayExchangeRate()}${toCurrency.currencySymbol}`} </span>
     </div>
   );

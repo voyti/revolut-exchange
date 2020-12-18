@@ -47,6 +47,10 @@ const getLoggingOutput = () => {
   return LOGGING_OUTPUT;
 }
 
+const isCurrencyValueEmpty = (currencyValue: string) => {
+  return currencyValue === DEFAULT_EMPTY_CURRENCY_STRING_VALUE;
+}
+
 const positiveNumberValidator = (numValue: number) => {
   if (_.isNaN(numValue)) {
     return false;
@@ -88,5 +92,6 @@ export {
   getLoggingOutput,
   positiveNumberValidator,
   formatCurrencyString,
-  areCurrenciesSame
+  areCurrenciesSame,
+  isCurrencyValueEmpty,
 };

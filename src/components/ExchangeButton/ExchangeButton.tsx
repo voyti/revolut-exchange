@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import './ExchangeButton.scss';
 import { Currency } from '../../interfaces/Exchange';
+import _ from 'lodash';
+import { isCurrencyValueEmpty } from '../../store/utils';
 
 interface ExchangeButtonProps {
   fromValue: string,
@@ -26,26 +28,30 @@ const ExchangeButton = ({fromValue, toValue, fromCurrency, toCurrency, onExchang
     return fromCurrency.currencyName !== toCurrency.currencyName;
   }, [fromCurrency, toCurrency]);
 
+  const isInputsValueEmpty = useCallback(() => {
+    return _.every([fromValue, toValue], isCurrencyValueEmpty);
+  }, [fromValue, toValue])
+
   return (
     <button className="exchange-button"
 
       onClick={handleExchangeButtonClicked}
-      disabled={!fromValue || !toValue || !checkIfFundsSufficient() || !checkIfCurrenciesDifferent()}>
+      disabled={isInputsValueEmpty() || !checkIfFundsSufficient() || !checkIfCurrenciesDifferent()}>
 
       <div className="exchange-button__main-label"> <img src="exchange_icon.svg" alt="Exchange icon"/>Exchange</div>
 
       <div className="exchange-button__sub-label">
-        { fromValue && toValue && checkIfCurrenciesDifferent() && checkIfFundsSufficient() ?
+        { !isInputsValueEmpty() && checkIfCurrenciesDifferent() && checkIfFundsSufficient() ?
           <span>You will get
             <span>{toCurrency.currencySymbol}{toValue}</span>for
             <span>{fromCurrency.currencySymbol}{fromValue}</span>
           </span> : null }
 
-        { fromValue && toValue && checkIfCurrenciesDifferent() && !checkIfFundsSufficient() ?
+        { !isInputsValueEmpty() && checkIfCurrenciesDifferent() && !checkIfFundsSufficient() ?
           <span>You don't have sufficient funds
           </span> : null }
 
-        { fromValue && toValue && !checkIfCurrenciesDifferent() ?
+        { !isInputsValueEmpty() && !checkIfCurrenciesDifferent() ?
           <span>Please pick two different currencies
           </span> : null }
       </div>

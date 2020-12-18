@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import './Exchange.scss';
 import { loadRatesApi } from '../../store/rates.api';
-import { getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator, areCurrenciesSame, formatCurrencyString } from '../../store/utils';
+import { getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator, areCurrenciesSame, formatCurrencyString, isCurrencyValueEmpty } from '../../store/utils';
 import { useInterval } from '../../store/react-utils';
 import { Currency, Rate } from '../../interfaces/Exchange';
 import ExchangeInput from '../ExchangeInput/ExchangeInput';
@@ -10,6 +10,7 @@ import ErrorBox from '../ErrorBox/ErrorBox';
 import ExchangeButton from '../ExchangeButton/ExchangeButton';
 import Divider from '../Divider/Divider';
 import ExchangeRateLabel from '../ExchangeRateLabel/ExchangeRateLabel';
+import _ from 'lodash';
 
 const RATES_POLLING_INTERVAL_MS = 10000;
 const ERROR_DISPLAY_PERIOD_MS = 5000;
@@ -99,6 +100,10 @@ const Exchange = ({ currencies, onExchangeMade }: ExchangeProps) => {
     if (rates.length) calculateAndSetDependentValue();
   }, [calculateAndSetDependentValue, fromValue, toValue, rates]);
 
+  const isInputsValueEmpty = useCallback(() => {
+    return _.every([fromValue, toValue], isCurrencyValueEmpty);
+  }, [fromValue, toValue])
+
   const handleFromCurrencyInputChanged = (inputChangeEvent: React.ChangeEvent<HTMLInputElement>) => {
     handleCurrencyInputChanged(setFromValue, 'toValue', inputChangeEvent)
   }
@@ -168,7 +173,7 @@ const Exchange = ({ currencies, onExchangeMade }: ExchangeProps) => {
           <ExchangedCurrency currency={fromCurrency} value={fromValue} isMoneySource={true} onCurrencyPicked={handleFromCurrencyCycled}/>
 
           <div className="exchange-operand__value-container exchange-value-text">
-            {fromValue ? <span>-</span> : null }
+            {!isInputsValueEmpty() ? <span>-</span> : null }
             {rates.length ?
               <ExchangeInput
                 currency={fromCurrency}
@@ -187,7 +192,7 @@ const Exchange = ({ currencies, onExchangeMade }: ExchangeProps) => {
           <ExchangedCurrency currency={toCurrency} value={toValue} onCurrencyPicked={handleToCurrencyCycled} />
 
           <div className="exchange-operand__value-container exchange-value-text">
-            {toValue ? <span>+</span>: null}
+            {!isInputsValueEmpty() ? <span>+</span>: null}
             {rates.length ?
               <ExchangeInput
                 currency={toCurrency}
