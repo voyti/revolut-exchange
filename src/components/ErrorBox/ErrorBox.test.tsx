@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import ErrorBox from './ErrorBox';
 
-test('renders learn react link', () => {
+test('renders passed error text', () => {
   const testMessage = 'Test test'
 
   render(<ErrorBox error={testMessage}/>);

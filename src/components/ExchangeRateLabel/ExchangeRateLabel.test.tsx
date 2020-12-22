@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { Currency, Rate } from '../../interfaces/Exchange';
 import ExchangeRateLabel from './ExchangeRateLabel';
 
-test('renders learn react link', () => {
+test('renders the currency label', () => {
   const currencies: Currency[] = [
-    { currencyName: 'USD', currencySymbol: '$', amount: 134.54 },
-    { currencyName: 'EUR', currencySymbol: '€', amount: 44.52 }
+    { currencyName: 'USD', currencySymbol: '$', amount: 10 },
+    { currencyName: 'EUR', currencySymbol: '€', amount: 10 }
   ];
 
   const rates: Rate[] = [

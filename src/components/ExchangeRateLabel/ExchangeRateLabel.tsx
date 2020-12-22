@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import './ExchangeRateLabel.scss';
 import { Currency, Rate } from '../../interfaces/Exchange';
-import { areCurrenciesSame, formatCurrencyString, getCurrenciesExchangeRate } from '../../store/utils';
+import { areCurrenciesDifferent, formatCurrencyString, getCurrenciesExchangeRate } from '../../store/utils';
 
 interface ExchangeRateLabelProps {
   fromCurrency: Currency,
@@ -13,7 +13,7 @@ const ExchangeRateLabel = ({fromCurrency, toCurrency, rates }: ExchangeRateLabel
 
   const checkIfCurrenciesDifferent = useCallback(
     () => {
-    return areCurrenciesSame(fromCurrency, toCurrency);
+    return areCurrenciesDifferent(fromCurrency, toCurrency);
   }, [fromCurrency, toCurrency]);
 
   const getUnitDisplayExchangeRate = useCallback(

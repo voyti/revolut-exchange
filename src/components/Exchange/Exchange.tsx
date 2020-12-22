@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 import './Exchange.scss';
 import { loadRatesApi } from '../../store/rates.api';
-import { getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator, areCurrenciesSame, formatCurrencyString, isCurrencyValueEmpty } from '../../store/utils';
+import { getCurrenciesExchangeRate, getLoggingOutput, positiveNumberValidator, areCurrenciesDifferent, formatCurrencyString, isCurrencyValueEmpty } from '../../store/utils';
 import { useInterval } from '../../store/react-utils';
 import { Currency, Rate } from '../../interfaces/Exchange';
 import ExchangeInput from '../ExchangeInput/ExchangeInput';
@@ -161,7 +161,7 @@ const Exchange = ({ currencies, onExchangeMade }: ExchangeProps) => {
   }
 
   const checkIfCurrenciesDifferent = useCallback(() => {
-    return areCurrenciesSame(fromCurrency, toCurrency);
+    return areCurrenciesDifferent(fromCurrency, toCurrency);
   }, [fromCurrency, toCurrency]);
 
   return (

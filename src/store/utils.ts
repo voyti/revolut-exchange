@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import _ from 'lodash';
 import { Currency, Rate } from '../interfaces/Exchange';
+import { IncorrectRatesError, InvalidFormattingAttemptError, RateNotFoundError, RatesListEmptyError } from "./exceptions";
 
 const LOGGING_OUTPUT = window.console;
 const DECIMAL_CURRENCY_SEPARATOR = '.';
@@ -20,26 +21,25 @@ const getCurrenciesExchangeRate = (fromCurrencyName: string, toCurrencyName: str
     const toCurrency = _.find(rates, ['currencyName', toCurrencyName]);
 
     if (_.isNil(fromCurrency)) {
-      throw new Error(`Cannot find rate for currency: ${fromCurrencyName}`);
+      throw new RateNotFoundError(fromCurrencyName);
     }
 
     if (_.isNil(toCurrency)) {
-      throw new Error(`Cannot find rate for currency: ${toCurrencyName}`);
+      throw new RateNotFoundError(toCurrencyName);
     }
 
-    if (toCurrency.rate === 0 || fromCurrency.rate === 0) {
-      throw new Error('Incorrect rates - the rate value can\'t be zero');
+    if (toCurrency.rate <= 0 || fromCurrency.rate <= 0) {
+      throw new IncorrectRatesError();
     }
 
     return toCurrency.rate / fromCurrency.rate;
 
   } else {
-    throw new Error('Cannot calculate rates: Rates list is empty');
+    throw new RatesListEmptyError();
   }
 };
 
-
-const areCurrenciesSame = (currencyA: Currency, currencyB: Currency) => {
+const areCurrenciesDifferent = (currencyA: Currency, currencyB: Currency) => {
   return currencyA.currencyName !== currencyB.currencyName;
 }
 
@@ -65,8 +65,8 @@ const formatCurrencyString = (currencyValue: string | number) => {
   let processedStringNumber = currencyValue.toString();
   const decimalPart = processedStringNumber.split(DECIMAL_CURRENCY_SEPARATOR)[1];
 
-  if (_.isNaN(formatCurrencyString)) {
-    throw new Error('Trying to format a NaN to a Currency string');
+  if (_.isNaN(currencyValue)) {
+    throw new InvalidFormattingAttemptError('a NaN to a Currency string');
   }
 
   if (processedStringNumber === '') {
@@ -75,7 +75,8 @@ const formatCurrencyString = (currencyValue: string | number) => {
 
   // trim leading zeros
   if (processedStringNumber.length > 1) {
-    processedStringNumber = processedStringNumber.replace(/^0+/g, '');
+    processedStringNumber = _.trimStart(processedStringNumber, '0');
+    processedStringNumber = processedStringNumber.length ? processedStringNumber : DEFAULT_EMPTY_CURRENCY_STRING_VALUE;
   }
 
   // trim excess decimals
@@ -92,6 +93,6 @@ export {
   getLoggingOutput,
   positiveNumberValidator,
   formatCurrencyString,
-  areCurrenciesSame,
+  areCurrenciesDifferent,
   isCurrencyValueEmpty,
 };

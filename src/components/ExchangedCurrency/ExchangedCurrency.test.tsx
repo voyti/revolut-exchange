@@ -1,15 +1,19 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Currency } from '../../interfaces/Exchange';
 import ExchangedCurrency from './ExchangedCurrency';
 
-test('renders learn react link', () => {
-  const currencies: Currency[] = [
-    { currencyName: 'USD', currencySymbol: '$', amount: 134.54 },
-    { currencyName: 'EUR', currencySymbol: '€', amount: 44.52 }
-  ];
-  const cb = () => {};
+test('renders proper currency text and calls callback', () => {
+  const currency: Currency = { currencyName: 'USD', currencySymbol: '$', amount: 10 };
+  const value = '10';
+  const handleCurrencyCycled = jest.fn();
 
-  render(<ExchangedCurrency currency={currencies[0]} value={'0'} onCurrencyPicked={cb}/>);
-  const linkElement = screen.getByText(/You have .*/i);
+  render(<ExchangedCurrency currency={currency} value={value} onCurrencyPicked={handleCurrencyCycled}/>);
+  const linkElement = screen.getByText("You have $10");
   expect(linkElement).toBeInTheDocument();
+
+  const nextButton = screen.getByAltText("Next currency");
+  userEvent.click(nextButton);
+
+  expect(handleCurrencyCycled).toHaveBeenCalledWith('next');
 });

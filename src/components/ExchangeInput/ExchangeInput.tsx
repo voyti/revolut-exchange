@@ -15,6 +15,7 @@ const ExchangeInput = ({currency, inputValue, onInputChanged, shouldAutoFocus }:
     <span className="exchange-input">
       <input
         className="exchange-value-text"
+        alt="Exchange value input"
         type="number"
         min="0"
         max={currency.amount}
